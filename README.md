@@ -1,7 +1,7 @@
 # PSOP
 ### Proiect Proiectarea Sistemelor de Operare  
   
-Tema proiectului: **Aplicație de tip port-scanner**   
+Tema proiectului: **Aplicație de tip Port Scanner**   
   
 Echipa:  
 *Sd. Sg. Grigore Maria Emilia*  
