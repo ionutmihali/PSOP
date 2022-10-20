@@ -8,3 +8,4 @@ Echipa:
 *Sd. Sg. Mihali Sorin Ionuț*  
   
 Grupa: C113C
+
