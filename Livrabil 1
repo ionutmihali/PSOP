@@ -16,3 +16,4 @@ Aplicația concepută pune la dispoziția utilizatorului următoarele opțiuni:
 OUTPUT:
     Afișează succint lista de porturi TCP/UDP deschise, pentru fiecare adresă IP, și numele serviciului care rulează pe portul respectiv.
     
+
