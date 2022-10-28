@@ -7,13 +7,12 @@ Aplicația concepută pune la dispoziția utilizatorului următoarele opțiuni:
 3.--file.
     Se dă ca argument un nume de fișier care conține pe fiecare linie câte o adresă IP, pe care se vor face scanarea.
           *nota: în cazul în care nu e specificată opțiunea --ip și opțiunea --file SAU dacă fișierul dat ca argument la opțiunea --file este gol, va apărea o eroare 
-    și utilizatorul va avea opțiunea de a rula aplicația din nou
+    și utilizatorul va avea opțiunea de a rula aplicația din nou.
 4.--transport.
     Implicit, se scanează atât porturile UDP, cât și TCP. Utilizând această opțiune, putem alege să facem scanarea doar pe unul dintre aceste tipuri.
 5.--help. 
-    Oferă utilizatorului un man-page al.
+    Oferă utilizatorului un man-page.
     
 OUTPUT:
     Afișează succint lista de porturi TCP/UDP deschise, pentru fiecare adresă IP, și numele serviciului care rulează pe portul respectiv.
-    
-
+    Ex.: port 1->tcpmux, TCP Port Service Multiplexer
