@@ -2,17 +2,26 @@
 
 Există trei tipuri de porturi în zona de sisteme de calcul: 
 •	Porturi hardware: mufe pentru periferice
-•	Porturi software: un segment/parte/bucată de cod software căreia i-a fost asignat un alt sistem de operare sau componentă hardware pe care să lucreze față de cel/cea original/ă.
+•	Porturi software: un segment/parte/bucată de cod software căreia i-a fost asignat un alt sistem de operare sau componentă hardware
+  pe care să lucreze față de cel/cea original/ă.
 •	**Porturi de rețea**: valoare numerică asociată cu un protocol care facilitează comunicarea pentru un serviciu/funcție
 
-Porturile spre care ne îndreptăm atenția cu această aplicație sunt cele de rețea (network ports). Pentru a putea folosi un singur canal fizic conectat la rețea (cablu coaxial, fibra optică, cablu torsadat) cu scopul gestiunii de cereri (requests) de intrare/ieșire, sistemul de operare asignează numere de port fiecărui request. Un număr de port poate lua valori între 0 si 65535 (=216).
+Porturile spre care ne îndreptăm atenția cu această aplicație sunt cele de rețea (network ports). Pentru a putea folosi un singur canal
+fizic conectat la rețea (cablu coaxial, fibra optică, cablu torsadat) cu scopul gestiunii de cereri (requests) de intrare/ieșire, sistemul
+de operare asignează numere de port fiecărui request. Un număr de port poate lua valori între 0 si 65535 (=216).
 Unele porturi sunt implicite. 
 - Ex: protocolul FTP are mereu numărul de port 21, iar HTTP, 80. Acestea se numesc porturi well-known și au valori cuprinse între 0 și 1023.
 
-Porturile de la 1024 la 49151 se numesc porturi înregistrate (registered) și pot fi alocate de către IANA (Internet Assigned Numbers Authority) pentru un serviciu anume, la cerere. Porturile de la 49152 la 65535 sunt porturi dinamice și pot fi folosite de către orice tip de serviciu.
-Ca o paralelă, numărul de telefon al unei companii reprezintă adresa IP a device-ului nostru. Apelând numărul de telefon, știm că avem legătură cu respectiva companie, însă numai apasând pe o anumită tastă (echivalentă cu numărul de port) putem face legătura cu serviciul care ne interesează: serviciu clienți, contact conducere, etc.
+Porturile de la 1024 la 49151 se numesc porturi înregistrate (registered) și pot fi alocate de către IANA (Internet Assigned Numbers Authority)
+pentru un serviciu anume, la cerere. Porturile de la 49152 la 65535 sunt porturi dinamice și pot fi folosite de către orice tip de serviciu.
+Ca o paralelă, numărul de telefon al unei companii reprezintă adresa IP a device-ului nostru. Apelând numărul de telefon, știm că avem legătură
+cu respectiva companie, însă numai apasând pe o anumită tastă (echivalentă cu numărul de port) putem face legătura cu serviciul care ne interesează:
+serviciu clienți, contact conducere, etc.
 
-Un port este asociat întotdeauna cu un protocol. Portul este specificat după adresa IP sau numele domeniului urmat de două puncte. Exemplu: 10.0.0.1:80, www.techtarget.com:443.
+Un port este asociat întotdeauna cu un protocol. Portul este specificat după adresa IP sau numele domeniului urmat de două puncte. Exemplu: 10.0.0.1:80,
+www.techtarget.com:443.
 Un port poate asculta (listening port) traficul de rețea în așteptarea unor cereri de conexiuni de intrare pe portul respectiv.
 
-Scanarea porturilor dintr-o rețea este o metodă prin care putem să determinăm care porturi sunt deschise și ar putea permite primirea/trimiterea de pachete în rețeaua respectivă. Această metodă presupune, de asemenea, și trimiterea de pachete pe anumite porturi pentru a vedea răspunsurile primite și a identifica, astfel, vulnerabilitățile existente (exemplu: acces neautorizat). Protocoalele folosite pentru scanarea de porturi sunt TCP si UDP.
+Scanarea porturilor dintr-o rețea este o metodă prin care putem să determinăm care porturi sunt deschise și ar putea permite primirea/trimiterea
+de pachete în rețeaua respectivă. Această metodă presupune, de asemenea, și trimiterea de pachete pe anumite porturi pentru a vedea răspunsurile
+primite și a identifica, astfel, vulnerabilitățile existente (exemplu: acces neautorizat). Protocoalele folosite pentru scanarea de porturi sunt TCP si UDP.
