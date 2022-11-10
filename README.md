@@ -9,3 +9,4 @@ Echipa:
   
 Grupa: C113C
 
+În acest branch vor fi postate fișiere conținând codul aferent proiectului, cât și variantele acestora.
