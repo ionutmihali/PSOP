@@ -8,12 +8,12 @@
 #include <ctype.h>
 #include <unistd.h>
 
-int main(int argc , char **argv)
+int main(int argc , char *argv[])
 {
-	struct hostent *host;
+	struct hostent *host; //server dns
 	int start , end;
 	char hostname[100];
-	struct sockaddr_in sa;
+	struct sockaddr_in sa; //conectare socket
 	
 	// Hostname
 	printf("Enter hostname or IP : ");
@@ -75,7 +75,7 @@ int main(int argc , char **argv)
 		//Eroare conectare
 		if( err < 0 )
 		{
-			//printf("%s %-5d %s\r" , hostname , i, strerror(errno));
+			printf("%s %-5d %s\r" , hostname , i, strerror(errno));
 			fflush(stdout);
 		}
 		//Conectare reusita
