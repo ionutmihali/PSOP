@@ -20,7 +20,7 @@ int main(int argc , char *argv[])
 	scanf("%s", &hostname);
 	
 	//Port start
-	printf("\nEnter start port number : ");
+	printf("Enter start port number : ");
 	scanf("%d" , &start);
 	
 	//Port end 
@@ -43,7 +43,7 @@ int main(int argc , char *argv[])
 	{
 		printf("Translating hostname...");
 		strncpy((char*)&sa.sin_addr , (char*)host->h_addr , sizeof(sa.sin_addr));
-		printf("Done\n");
+		printf("Done\n %s\n", (char*)host->h_addr);
 	}
 	else
 	{
@@ -71,18 +71,18 @@ int main(int argc , char *argv[])
 
 		//Conectare- folosind socketul si structura sockaddr
 		err = connect(sock , (struct sockaddr*)&sa , sizeof sa);
-		
-		//Eroare conectare
-		if( err < 0 )
-		{
-			printf("%s %-5d %s\r" , hostname , i, strerror(errno));
-			fflush(stdout);
-		}
+
 		//Conectare reusita
-		else
+		if( err >= 0 )
 		{
 			printf("%-5d open\n",  i);
 		}
+		//Eroare conectare
+		/*else
+		{
+			printf("%s %-5d %s\r\n" , hostname , i, strerror(errno));
+			fflush(stdout);
+		}*/
 		close(sock);
 	}
 	
