@@ -19,9 +19,9 @@ Translatare hostname-> adresa IP
 Parametrii (range porturi, hostname, IP) introduse din interfata, de catre utilizator, in timpul rularii programului.
 
 Varianta 2:  
-Scanarea tuturor porturilor (65535).
-Determinare porturi deschise, serviciul care ruleaza pe port, cat si tipul de trafic.
+Scanarea tuturor porturilor (65535).  
+Determinare porturi deschise, serviciul care ruleaza pe port, cat si tipul de trafic.  
 Translatare hostname-> adresa IP  
-Citirea din fisier de input a unor hostname-uri/ip=uri.
+Citirea din fisier de input a unor hostname-uri/ip=uri.  
 Parametrii (hostname=-h, IP=-h, timeout=timp maxim de asteptare raspuns=-t, fisier de input=-i) introduse ca argumente in momentul rularii programului, parsarea acestora cu ajutorul header-ului arg_parse.h.  
-Implementare prin intermediul thread-urilor.
+Implementare prin intermediul thread-urilor.  
