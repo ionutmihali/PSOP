@@ -1,0 +1,3 @@
+google.com
+www.mta.ro
+8.8.8.8
