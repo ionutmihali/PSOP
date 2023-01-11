@@ -15,6 +15,7 @@ struct thread_options {
     int *excluded_ports;        // range de porturi excluse de la scanare
     int excluded_ports_count;
     char tcp_flags[7]; // TCP flags la scanare
+    int flag;
 };
 
 int myScan_error(const char *s, int sock);
