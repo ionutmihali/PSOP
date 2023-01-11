@@ -22,7 +22,8 @@ struct arguments
     int fast;                   // scanare rapida
     int *excluded_ports;        // range de porturi excluse de la scanare
     int excluded_ports_count;
-    char tcp_flags[7]; // TCP flags la scanare
+    int tcp_flags[7]; // TCP flags la scanare
+    int flag;         //
     int menu;
 };
 
@@ -33,12 +34,12 @@ struct argp_option options[] = {
     {"input", 'i', "FILE", 0, "Input from FILE instead of standard input"},
     {"port", 'p', "PORT", 0, "Port range to scan"},
     {"threads", 'T', "THREADS", 0, "Number of threads to use for the scan"},
-    {"scan-type", 's', "TYPE", 0, "Scan type (SYN, ACK, FIN, XMAS, NULL)"},
+    {"scan-type", 's', "TYPE", 0, "Scan type (TCP, UDP)"},
     {"verbose", 'v', "VERBOSE", 0, "Verbose mode"},
     {"random", 'r', "RANDOM", 0, "Randomize the order of the ports being scanned"},
-    {"fast", 'f', "FAST", 0, "Use faster but less reliable scanning techniques"}, 
+    {"fast", 'f', "FAST", 0, "Use faster but less reliable scanning techniques"},
     {"exclude", 'e', "EXCLUDE", 0, "Exclude a range of ports from the scan"},
-    {"tcp-flags", 'F', "FLAGS", 0, "Customize the TCP flags sent during the scan: S=SYN, T=TCP, U=UDP, F=FIN, X=XMAS, N=NULL"}, //nu
+    {"tcp-flags", 'F', "FLAGS", 0, "Customize the TCP flags sent during the scan: S=SYN, F=FIN, R=RESET, P=PUSH, A=ACK, U=URGENT, NULL = TCPConnect, FPU = XMAS "}, // nu
     {0}};
 
 char doc[] =
@@ -137,22 +138,22 @@ error_t parse_opt(int key, char *arg, struct argp_state *state)
         {
             switch (flags_string[i])
             {
-            case 'F':
+            case 'F': // fin
                 arguments->tcp_flags[0] = 1;
                 break;
-            case 'S':
+            case 'S': // syn
                 arguments->tcp_flags[1] = 1;
                 break;
-            case 'R':
+            case 'R': // RESET
                 arguments->tcp_flags[2] = 1;
                 break;
-            case 'P':
+            case 'P': // PUSH
                 arguments->tcp_flags[3] = 1;
                 break;
-            case 'A':
+            case 'A': // ACK
                 arguments->tcp_flags[4] = 1;
                 break;
-            case 'U':
+            case 'U': // urgent
                 arguments->tcp_flags[5] = 1;
                 break;
             default:
@@ -187,6 +188,11 @@ struct arguments parse_args(int argc, char *argv[])
     strcpy(arguments.file_to_input, "");
     arguments.excluded_ports = NULL;
     arguments.excluded_ports_count = 0;
+    for (int i = 0; i < 7; i++)
+    {
+        arguments.tcp_flags[i] = 0;
+    }
+    arguments.flag = 1;
 
     int i = argp_parse(&argp, argc, argv, 0, 0, &arguments);
     return arguments;
