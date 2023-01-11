@@ -21,6 +21,7 @@ void *scan_thread(void *arg)
 {
 	struct thread_options *args = (struct thread_options *)arg;
 	int ports[300];
+	int flag = args->flag;
 	for (int i = 0; i < args->end - args->start + 1; i++)
 	{
 		ports[i] = args->start + i;
@@ -60,46 +61,94 @@ void *scan_thread(void *arg)
 		{
 			if (strcmp(args->scan_type, "TCP") == 0)
 			{
-				int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-				if (sockfd < 0)
+				if (flag == 1)
 				{
-					printf("eroare socket\n");
+					int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+					if (sockfd < 0)
+					{
+						printf("Eroare socket TCP.\n");
+					}
+
+					struct sockaddr_in addr;
+					bzero((char *)&addr, sizeof(addr));
+					addr.sin_family = AF_INET;
+					addr.sin_port = htons(port);
+					addr.sin_addr.s_addr = inet_addr(args->host);
+
+					struct timeval tv;
+					tv.tv_sec = args->timeout;
+					tv.tv_usec = 0;
+					setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&args->timeout, sizeof(tv));
+
+					int ret = connect(sockfd, (struct sockaddr *)&addr, sizeof(addr));
+					if (ret >= 0)
+					{
+						if (args->verbose == 1)
+						{
+							struct servent *s = getservbyport(htons(port), "tcp");
+							if (s)
+								printf("PORT: %d\tSTARE: OPEN SERVICE:%s\t PROTOCOL:%s\t\n", port, s->s_name, s->s_proto);
+						}
+						else
+						{
+							printf("PORT: %d\tSTARE: OPEN \n", port);
+						}
+					}
+
+					close(sockfd);
 				}
-
-				struct sockaddr_in addr;
-				bzero((char *)&addr, sizeof(addr));
-				addr.sin_family = AF_INET;
-				addr.sin_port = htons(port);
-				addr.sin_addr.s_addr = inet_addr(args->host);
-
-				struct timeval tv;
-				tv.tv_sec = args->timeout;
-				tv.tv_usec = 0;
-				setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&args->timeout, sizeof(tv));
-
-				int ret = connect(sockfd, (struct sockaddr *)&addr, sizeof(addr));
-				if (ret >= 0)
+				else
 				{
-					if (args->verbose == 1)
+					if (flag == 2 || flag==3 || flag==4)
 					{
-						struct servent *s = getservbyport(htons(port), NULL);
-						printf("PORT: %d\tSTARE: OPEN SERVICE:%s\t PROTOCOL:%s\t\n", port, s->s_name, s->s_proto);
-					}
-					else
-					{
-						printf("PORT: %d\tSTARE: OPEN \n", port);
+						// syn, fin, xmas in functie de flaguri
+						// TO DO
 					}
 				}
-
-				close(sockfd);
 			}
-			else if (strcmp(args->scan_type, "SYN") == 0)
+			else if (strcmp(args->scan_type, "UDP") == 0)
 			{
+				if (flag == 5)
+				{
+					int sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+					if (sockfd < 0)
+					{
+						printf("Eroare socket UDP.\n");
+					}
+					struct sockaddr_in addr;
+					bzero((char *)&addr, sizeof(addr));
+					addr.sin_family = AF_INET;
+					addr.sin_port = htons(port);
+					addr.sin_addr.s_addr = inet_addr(args->host);
+
+					struct timeval tv;
+					tv.tv_sec = args->timeout;
+					tv.tv_usec = 0;
+					setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&args->timeout, sizeof(tv));
+
+					int ret = connect(sockfd, (struct sockaddr *)&addr, sizeof(addr));
+					if (ret >= 0)
+					{
+
+						struct servent *s = getservbyport(htons(port), "udp");
+						if (s && args->verbose == 1)
+							printf("PORT: %d\tSTARE: OPEN SERVICE:%s\t PROTOCOL:%s\t\n", port, s->s_name, s->s_proto);
+						else if (s && args->verbose == 0)
+							printf("PORT: %d\tSTARE: OPEN \n", port);
+					}
+
+					close(sockfd);
+				}
+				else if (flag == 0)
+				{
+					printf("Nu poti selecta flaguri pentru acest tip de scanare.\n");
+					exit(-1);
+				}
 			}
 			else
 			{
 				printf("Tip de scanare necunoscut");
-				exit(0);
+				exit(-1);
 			}
 		}
 	}
@@ -126,12 +175,15 @@ void create_thread(struct arguments user_args)
 		strcpy(opt[thread_id].scan_type, user_args.scan_type);
 		opt[thread_id].verbose = user_args.verbose;
 		strcpy(opt[thread_id].file_to_output, user_args.file_to_output);
-		strcpy(opt[thread_id].tcp_flags, user_args.tcp_flags);
+		opt[thread_id].flag = user_args.flag;
+
+		for (int i = 0; i < 7; i++)
+			opt[thread_id].tcp_flags[i] = user_args.tcp_flags[i];
 
 		if (pthread_create(&threads[thread_id], NULL, scan_thread, &opt[thread_id]))
 		{
 			printf("Eroare creare thread\n");
-			exit(0);
+			exit(-1);
 		}
 	}
 
@@ -166,6 +218,43 @@ int main(int argc, char *argv[])
 			printf("eroare file descriptor.\n");
 			exit(-1);
 		}
+	}
+
+	if (strcmp(user_args.scan_type, "TCP") == 0)
+	{
+		if (user_args.tcp_flags[0] == 0 && user_args.tcp_flags[1] == 0 && user_args.tcp_flags[2] == 0 && user_args.tcp_flags[3] == 0 && user_args.tcp_flags[4] == 0 && user_args.tcp_flags[5] == 0)
+		{
+			printf("Scanning with TCPConnect.\n");
+			user_args.flag = 1;
+		}
+		else if (user_args.tcp_flags[0] == 0 && user_args.tcp_flags[1] == 1 && user_args.tcp_flags[2] == 0 && user_args.tcp_flags[3] == 0 && user_args.tcp_flags[4] == 0 && user_args.tcp_flags[5] == 0)
+		{
+			printf("Scanning with SYN.\n");
+			user_args.flag = 2;
+		}
+		else if (user_args.tcp_flags[0] == 1 && user_args.tcp_flags[1] == 0 && user_args.tcp_flags[2] == 0 && user_args.tcp_flags[3] == 0 && user_args.tcp_flags[4] == 0 && user_args.tcp_flags[5] == 0)
+		{
+			printf("Scanning with FIN.\n");
+			user_args.flag = 3;
+		}
+		else if (user_args.tcp_flags[0] == 1 && user_args.tcp_flags[1] == 0 && user_args.tcp_flags[2] == 0 && user_args.tcp_flags[3] == 1 && user_args.tcp_flags[4] == 0 && user_args.tcp_flags[5] == 1)
+		{
+			printf("Scanning with XMAS.\n");
+			user_args.flag = 4;
+		}
+	}
+	else if (strcmp(user_args.scan_type, "UDP") == 0)
+	{
+		if (user_args.tcp_flags[0] == 0 && user_args.tcp_flags[1] == 0 && user_args.tcp_flags[2] == 0 && user_args.tcp_flags[3] == 0 && user_args.tcp_flags[4] == 0 && user_args.tcp_flags[5] == 0)
+		{
+			printf("Scanning with UDP.\n");
+			user_args.flag = 5;
+		}
+	}
+	else
+	{
+		printf("Tip de scanare necunoscut.\n");
+		exit(-1);
 	}
 
 	if (strlen(user_args.file_to_input) == 0)
@@ -216,7 +305,6 @@ int main(int argc, char *argv[])
 		free(p);
 		free(buffer);
 	}
-	// sleep(user_args->timeout + user_args->timeout); // Ensure all threads had done their work
 
 	rc = close(fd);
 	return 0;
