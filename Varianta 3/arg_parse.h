@@ -7,16 +7,21 @@
 
 #define DEFAULT_SCAN_TYPE "SYN"
 
+char doc[] =
+    "myScan is a port scanner application that is intended to show some logic behind port scanning.\n";
+
+char args_doc[] = "";
+
 struct arguments
 {
     char host[INET_ADDRSTRLEN]; // hostname sau IP
     int timeout;                // timeout pentru fiecare port
-    int threads;                // numar de thread-uri
+    int no_threads;                // numar de thread-uri
     char file_to_output[30];    // fisier de output
     char file_to_input[30];     // fisier de input
     int start_port;             // port inceput range
     int end_port;               // port sfarsit range
-    char scan_type[10];         // tipul scanarii: SYN, ACK, FIN, XMAS, NULL
+    char scan_type[10];         // tipul scanarii: TCP sau UDP
     int verbose;                // verbose
     int randomize;              // scanarea porturilor in ordine aleatoare
     int fast;                   // scanare rapida
@@ -24,7 +29,6 @@ struct arguments
     int excluded_ports_count;
     int tcp_flags[7]; // TCP flags la scanare
     int flag;         //
-    int menu;
 };
 
 struct argp_option options[] = {
@@ -33,19 +37,14 @@ struct argp_option options[] = {
     {"output", 'o', "FILE", 0, "Output to FILE instead of standard output"},
     {"input", 'i', "FILE", 0, "Input from FILE instead of standard input"},
     {"port", 'p', "PORT", 0, "Port range to scan"},
-    {"threads", 'T', "THREADS", 0, "Number of threads to use for the scan"},
+    {"no_threads", 'T', "THREADS", 0, "Number of threads to use for the scan"},
     {"scan-type", 's', "TYPE", 0, "Scan type (TCP, UDP)"},
     {"verbose", 'v', "VERBOSE", 0, "Verbose mode"},
     {"random", 'r', "RANDOM", 0, "Randomize the order of the ports being scanned"},
     {"fast", 'f', "FAST", 0, "Use faster but less reliable scanning techniques"},
     {"exclude", 'e', "EXCLUDE", 0, "Exclude a range of ports from the scan"},
-    {"tcp-flags", 'F', "FLAGS", 0, "Customize the TCP flags sent during the scan: S=SYN, F=FIN, R=RESET, P=PUSH, A=ACK, U=URGENT, NULL = TCPConnect, FPU = XMAS "}, // nu
+    {"tcp-flags", 'F', "FLAGS", 0, "Customize the TCP flags sent during the scan: F=FIN, S=SYN, P=PUSH, R=RESET, A=ACK, U=URGENT, NULL = TCPConnect, FPU = XMAS "}, // nu
     {0}};
-
-char doc[] =
-    "myScan is a port scanner application that is intended to show some logic behind port scanning.\n";
-
-char args_doc[] = "";
 
 error_t parse_opt(int key, char *arg, struct argp_state *state)
 {
@@ -66,7 +65,7 @@ error_t parse_opt(int key, char *arg, struct argp_state *state)
         strncpy(arguments->file_to_input, arg, 30);
         break;
     case 'T':
-        arguments->threads = atoi(arg);
+        arguments->no_threads = atoi(arg);
         break;
     case 'p':;
         char range[20];
@@ -177,10 +176,10 @@ struct arguments parse_args(int argc, char *argv[])
     static struct arguments arguments;
     strcpy(arguments.host, "");
     arguments.timeout = 5;
-    arguments.threads = 5;
+    arguments.no_threads = 5;
     arguments.start_port = 1;
     strcpy(arguments.scan_type, "TCP");
-    arguments.end_port = 65535;
+    arguments.end_port = 1024;
     arguments.verbose = 0;
     arguments.randomize = 0;
     arguments.fast = 0;
