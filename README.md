@@ -44,3 +44,7 @@ Pe langa implementarile deja facute:
   &nbsp;&nbsp;-scanType [-s]: specificam tipul de scanare: TCP sau UDP  
   &nbsp;&nbsp;-tcp-flags [-F]: specificam flagurile din headerul TCP: [S] = tcp syn.   
 -Impartirea codului din main pe functii pentru lizibilitate  
+
+Varianta finala:  
+-Functionarea integrala a aplicatiei  
+-Implementarea 'fin' [F] si 'xmas' [FPU] ca flaguri pentru scanarea TCP  
