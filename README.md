@@ -29,18 +29,18 @@ Implementare prin intermediul thread-urilor.
 Varianta 3:  
 Pe langa implementarile deja facute:  
 -Optiunile:  
-  -output file [-o]:  scrie outputul comenzii intr-un fisier;  
-  -port range [-p]: scaneaza:  
-        -un port (80)  
-        -un range de porturi (75-85)  
-  -excluded ports [-e]: in scanare, sare peste:  
-        -un range de porturi (45-90)  
-        -o multime de porturi (45,89,1234)  
-        -un singur port: (89)  
-  -threads [-T]: seteaza un alt numar de threaduri folosite in program fata de cel implicit (5)  
-  -verbose [-v]: specifica si tipul de serviciu gasit pe port si tipul de protocol  
-  -random [-r]: scaneaza porturile intr-o ordine aleatoare  
-  -fast [-f]: nu se introduce o intarziere in scanare  
-  -scanType [-s]: specificam tipul de scanare: TCP sau UDP  
-  -tcp-flags [-F]: specificam flagurile din headerul TCP: [S] = tcp syn.   
+  &nbsp;&nbsp;-output file [-o]:  scrie outputul comenzii intr-un fisier;  
+  &nbsp;&nbsp;-port range [-p]: scaneaza:  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-un port (80)  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-un range de porturi (75-85)  
+  &nbsp;&nbsp;-excluded ports [-e]: in scanare, sare peste:  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-un range de porturi (45-90)  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-o multime de porturi (45,89,1234)  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-un singur port: (89)  
+  &nbsp;&nbsp;-threads [-T]: seteaza un alt numar de threaduri folosite in program fata de cel implicit (5)  
+  &nbsp;&nbsp;-verbose [-v]: specifica si tipul de serviciu gasit pe port si tipul de protocol  
+  &nbsp;&nbsp;-random [-r]: scaneaza porturile intr-o ordine aleatoare  
+  &nbsp;&nbsp;-fast [-f]: nu se introduce o intarziere in scanare  
+  &nbsp;&nbsp;-scanType [-s]: specificam tipul de scanare: TCP sau UDP  
+  &nbsp;&nbsp;-tcp-flags [-F]: specificam flagurile din headerul TCP: [S] = tcp syn.   
 -Impartirea codului din main pe functii pentru lizibilitate  
