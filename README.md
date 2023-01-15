@@ -30,13 +30,13 @@ Varianta 3:
 Pe langa implementarile deja facute:  
 -Optiunile:  
   -output file [-o]:  scrie outputul comenzii intr-un fisier;  
-  -port range [-p]: scaneaza  
-    -un port (80)  
-    -un range de porturi (75-85)  
+  -port range [-p]: scaneaza:  
+        -un port (80)  
+        -un range de porturi (75-85)  
   -excluded ports [-e]: in scanare, sare peste:  
-    -un range de porturi (45-90)  
-    -o multime de porturi (45,89,1234)  
-    -un singur port: (89)  
+        -un range de porturi (45-90)  
+        -o multime de porturi (45,89,1234)  
+        -un singur port: (89)  
   -threads [-T]: seteaza un alt numar de threaduri folosite in program fata de cel implicit (5)  
   -verbose [-v]: specifica si tipul de serviciu gasit pe port si tipul de protocol  
   -random [-r]: scaneaza porturile intr-o ordine aleatoare  
