@@ -276,7 +276,6 @@ void *scan_thread(void *arg)
 						}
 						else if (flag == 4)
 						{
-							printf("%d\t%d\t%d\n", port, tcp_header->rst, tcp_header->ack);
 							if (tcp_header->rst == 1 && tcp_header->ack == 1)
 							{
 								display_port_status(port, args->verbose, "tcp");
