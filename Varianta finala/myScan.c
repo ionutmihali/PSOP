@@ -82,7 +82,7 @@ void *scan_thread(void *arg)
 		{
 			int j = rand() % (args->end - args->start + 1) + args->start;
 			int temp = ports[i];
-			ports[i] = ports[j];
+			ports[i] = j;
 			ports[j] = temp;
 		}
 	}
