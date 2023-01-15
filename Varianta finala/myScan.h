@@ -17,5 +17,3 @@ struct thread_options {
     char tcp_flags[7]; // TCP flags la scanare
     int flag;
 };
-
-int myScan_error(const char *s, int sock);
