@@ -1,0 +1,7 @@
+Scanning with TCPConnect.
+Scanning 192.124.249.79
+--> Created 1 threads.
+PORT: 80	STARE: OPEN SERVICE:http	 PROTOCOL:tcp	
+Scanning 142.251.140.46
+--> Created 1 threads.
+PORT: 80	STARE: OPEN SERVICE:http	 PROTOCOL:tcp	
